@@ -1,0 +1,43 @@
+<?php
+
+return [
+    'page_title' => 'Cybersecurity Dashboard',
+    'page_subheading' => 'Auditoría de postura: entorno, rutas, workers, Redis y runtime.',
+    'brand_hint' => 'Checks de solo lectura. Los secretos nunca se muestran completos.',
+    'rescan' => 'Volver a escanear',
+    'rescanned' => 'Auditoría de seguridad actualizada',
+    'profile' => 'Perfil',
+    'last_run' => 'Última ejecución',
+    'findings_heading' => 'Hallazgos',
+    'remediation' => 'Remediación',
+    'no_findings' => 'Sin hallazgos. Ejecuta un escaneo.',
+    'stat_score' => 'Puntaje',
+    'stat_grade' => 'Nota :grade',
+    'stat_critical' => 'Críticos',
+    'stat_critical_help' => 'Hallazgos críticos abiertos',
+    'stat_high' => 'Altos',
+    'stat_high_help' => 'Hallazgos altos abiertos',
+    'stat_passed' => 'Aprobados',
+    'stat_failed' => ':count abiertos',
+    'severity' => [
+        'critical' => 'Crítico',
+        'high' => 'Alto',
+        'medium' => 'Medio',
+        'low' => 'Bajo',
+        'info' => 'Info',
+    ],
+    'status' => [
+        'passed' => 'OK',
+        'failed' => 'Fallo',
+        'skipped' => 'Omitido',
+        'warning' => 'Aviso',
+    ],
+    'category' => [
+        'environment' => 'Entorno',
+        'auth' => 'Auth / Sesión',
+        'routes' => 'Rutas / API',
+        'dependencies' => 'Dependencias',
+        'infrastructure' => 'Infraestructura',
+        'runtime' => 'Runtime',
+    ],
+];

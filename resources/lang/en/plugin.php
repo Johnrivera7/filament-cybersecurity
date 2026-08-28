@@ -1,0 +1,43 @@
+<?php
+
+return [
+    'page_title' => 'Cybersecurity Dashboard',
+    'page_subheading' => 'Posture audit for environment, routes, workers, Redis and runtime.',
+    'brand_hint' => 'Read-only security checks. Secrets are never displayed in full.',
+    'rescan' => 'Re-scan',
+    'rescanned' => 'Security audit refreshed',
+    'profile' => 'Profile',
+    'last_run' => 'Last run',
+    'findings_heading' => 'Findings',
+    'remediation' => 'Fix',
+    'no_findings' => 'No findings yet. Run a scan.',
+    'stat_score' => 'Score',
+    'stat_grade' => 'Grade :grade',
+    'stat_critical' => 'Critical',
+    'stat_critical_help' => 'Open critical findings',
+    'stat_high' => 'High',
+    'stat_high_help' => 'Open high findings',
+    'stat_passed' => 'Passed',
+    'stat_failed' => ':count open issues',
+    'severity' => [
+        'critical' => 'Critical',
+        'high' => 'High',
+        'medium' => 'Medium',
+        'low' => 'Low',
+        'info' => 'Info',
+    ],
+    'status' => [
+        'passed' => 'Passed',
+        'failed' => 'Failed',
+        'skipped' => 'Skipped',
+        'warning' => 'Warning',
+    ],
+    'category' => [
+        'environment' => 'Environment',
+        'auth' => 'Auth / Session',
+        'routes' => 'Routes / API',
+        'dependencies' => 'Dependencies',
+        'infrastructure' => 'Infrastructure',
+        'runtime' => 'Runtime',
+    ],
+];

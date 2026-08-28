@@ -1,0 +1,13 @@
+.idea
+.vscode
+.phpunit.cache
+/build
+/coverage
+/node_modules
+/vendor
+composer.lock
+.phpunit.result.cache
+.php-cs-fixer.cache
+.DS_Store
+*.log
+auth.json

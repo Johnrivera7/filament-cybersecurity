@@ -1,0 +1,58 @@
+{
+    "name": "johnrivera7/filament-cybersecurity",
+    "description": "Filament Cybersecurity Dashboard — audit .env, routes, workers, Redis, PHP/Laravel posture and dependency advisories.",
+    "keywords": [
+        "filament",
+        "filament-plugin",
+        "laravel",
+        "cybersecurity",
+        "security-audit",
+        "security"
+    ],
+    "homepage": "https://github.com/Johnrivera7/filament-cybersecurity",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "John Rivera",
+            "email": "johnriveragonzalez7@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "filament/filament": "^5.0",
+        "illuminate/contracts": "^11.28|^12.0|^13.0",
+        "illuminate/support": "^11.28|^12.0|^13.0",
+        "spatie/laravel-package-tools": "^1.16"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.18",
+        "phpunit/phpunit": "^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "JohnRivera7\\FilamentCybersecurity\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "JohnRivera7\\FilamentCybersecurity\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "JohnRivera7\\FilamentCybersecurity\\FilamentCybersecurityServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "pint": "vendor/bin/pint"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
