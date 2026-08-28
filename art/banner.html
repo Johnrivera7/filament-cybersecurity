@@ -8,9 +8,11 @@
       --red: #E11D48;
       --red-bright: #FB7185;
       --red-deep: #9F1239;
+      --amber: #F59E0B;
+      --green: #22C55E;
       --black: #050505;
-      --ink: #0A0A0A;
       --panel: #111111;
+      --panel2: #0C0C0C;
       --border: #2A2A2A;
       --muted: #A3A3A3;
       --white: #FAFAFA;
@@ -23,175 +25,371 @@
     }
     .stage {
       width: 2560px; height: 1440px; position: relative;
-      padding: 88px 104px;
-      display: grid; grid-template-columns: 1.05fr 1.1fr; gap: 72px; align-items: center;
+      padding: 72px 88px;
+      display: grid; grid-template-columns: 0.92fr 1.18fr; gap: 56px; align-items: center;
       background:
-        radial-gradient(1000px 700px at 88% 12%, rgba(225, 29, 72, 0.35), transparent 55%),
-        radial-gradient(900px 600px at 8% 90%, rgba(159, 18, 57, 0.28), transparent 50%),
+        linear-gradient(rgba(225,29,72,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(225,29,72,.04) 1px, transparent 1px),
+        radial-gradient(1100px 700px at 92% 8%, rgba(225, 29, 72, 0.38), transparent 55%),
+        radial-gradient(900px 600px at 4% 88%, rgba(159, 18, 57, 0.25), transparent 50%),
         linear-gradient(145deg, #050505 0%, #0F0F0F 45%, #1A0508 100%);
+      background-size: 48px 48px, 48px 48px, auto, auto, auto;
     }
+    /* Floating alerts */
+    .float-alert {
+      position: absolute; z-index: 5;
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(17,17,17,.92); border: 1px solid var(--border);
+      border-radius: 14px; padding: 14px 18px;
+      box-shadow: 0 16px 40px rgba(0,0,0,.45);
+      backdrop-filter: blur(8px);
+    }
+    .float-alert.crit { border-color: rgba(225,29,72,.55); box-shadow: 0 0 24px rgba(225,29,72,.2); }
+    .float-alert.warn { border-color: rgba(245,158,11,.45); }
+    .float-alert.a1 { top: 48px; right: 120px; }
+    .float-alert.a2 { bottom: 100px; left: 72px; }
+    .float-alert.a3 { top: 280px; right: 48px; }
+    .alert-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: grid; place-items: center; flex-shrink: 0;
+    }
+    .alert-icon.crit { background: rgba(225,29,72,.25); color: var(--red-bright); }
+    .alert-icon.warn { background: rgba(245,158,11,.2); color: var(--amber); }
+    .alert-icon svg { width: 22px; height: 22px; fill: currentColor; }
+    .alert-text .t { font-size: 17px; font-weight: 800; }
+    .alert-text .m { font-size: 14px; color: var(--muted); margin-top: 2px; }
+
+    .left { position: relative; z-index: 2; }
+    .badge-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }
     .badge {
-      display: inline-flex; align-items: center; gap: 12px;
+      display: inline-flex; align-items: center; gap: 10px;
       background: rgba(225, 29, 72, 0.12);
       border: 1px solid rgba(251, 113, 133, 0.45);
       color: var(--red-bright);
-      font-size: 24px; font-weight: 700;
-      padding: 12px 22px; border-radius: 999px; margin-bottom: 32px;
+      font-size: 20px; font-weight: 700;
+      padding: 10px 18px; border-radius: 999px;
     }
-    .dot {
-      width: 12px; height: 12px; border-radius: 50%;
-      background: var(--red); box-shadow: 0 0 16px var(--red);
+    .badge.live { background: rgba(34,197,94,.1); border-color: rgba(34,197,94,.4); color: #4ADE80; }
+    .pulse {
+      width: 10px; height: 10px; border-radius: 50%; background: #4ADE80;
+      box-shadow: 0 0 0 4px rgba(74,222,128,.25);
     }
-    .brand {
-      display: flex; align-items: center; gap: 18px; margin-bottom: 28px;
-    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--red); box-shadow: 0 0 14px var(--red); }
+
+    .hero-row { display: flex; align-items: flex-start; gap: 24px; margin-bottom: 20px; }
+    .shield-wrap { position: relative; flex-shrink: 0; }
     .shield {
-      width: 72px; height: 72px; border-radius: 18px;
+      width: 88px; height: 88px; border-radius: 22px;
       background: linear-gradient(145deg, var(--red), var(--red-deep));
       display: grid; place-items: center;
-      box-shadow: 0 12px 40px rgba(225, 29, 72, 0.45);
+      box-shadow: 0 16px 48px rgba(225, 29, 72, 0.5);
     }
-    .shield svg { width: 40px; height: 40px; fill: #fff; }
+    .shield svg { width: 46px; height: 46px; fill: #fff; }
+    .shield-badge {
+      position: absolute; top: -8px; right: -8px;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--amber); color: #000;
+      font-size: 18px; font-weight: 900;
+      display: grid; place-items: center;
+      border: 3px solid var(--black);
+    }
+    .radar {
+      position: absolute; top: -20px; left: -20px;
+      width: 128px; height: 128px; opacity: .35;
+    }
     h1 {
-      font-size: 78px; line-height: 1.05; letter-spacing: -0.03em;
-      font-weight: 800; margin-bottom: 24px; max-width: 14ch;
+      font-size: 74px; line-height: 1.04; letter-spacing: -0.03em;
+      font-weight: 800; margin-bottom: 18px;
     }
     h1 span { color: var(--red-bright); }
     .lead {
-      font-size: 30px; line-height: 1.4; color: var(--muted);
-      max-width: 28ch; margin-bottom: 40px;
+      font-size: 26px; line-height: 1.45; color: var(--muted);
+      max-width: 30ch; margin-bottom: 32px;
     }
+    .alert-chips {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px;
+    }
+    .chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 16px; font-weight: 700; padding: 10px 14px;
+      border-radius: 12px; border: 1px solid var(--border);
+      background: var(--panel2);
+    }
+    .chip.crit { border-color: rgba(225,29,72,.5); color: var(--red-bright); }
+    .chip.high { border-color: rgba(245,158,11,.45); color: var(--amber); }
+    .chip.ok { border-color: rgba(34,197,94,.35); color: #4ADE80; }
+    .chip svg { width: 16px; height: 16px; fill: currentColor; }
+
     .features {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px;
-      max-width: 720px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px;
     }
     .feat {
-      display: flex; align-items: center; gap: 12px;
-      font-size: 22px; font-weight: 600; color: #E5E5E5;
+      display: flex; align-items: center; gap: 10px;
+      font-size: 19px; font-weight: 600; color: #E5E5E5;
+      background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.04);
+      border-radius: 12px; padding: 12px 14px;
     }
-    .feat i {
-      width: 10px; height: 10px; border-radius: 2px;
-      background: var(--red); flex-shrink: 0;
+    .feat-icon {
+      width: 28px; height: 28px; border-radius: 8px;
+      background: rgba(225,29,72,.15); color: var(--red-bright);
+      display: grid; place-items: center; flex-shrink: 0;
     }
+    .feat-icon svg { width: 16px; height: 16px; fill: currentColor; }
+
+    /* Right panel */
+    .right { position: relative; z-index: 2; }
     .card {
       background: var(--panel);
       border: 1px solid var(--border);
       border-radius: 28px; overflow: hidden;
-      box-shadow: 0 40px 80px rgba(0,0,0,.55), 0 0 0 1px rgba(225,29,72,.15);
+      box-shadow: 0 40px 80px rgba(0,0,0,.55), 0 0 0 1px rgba(225,29,72,.12);
     }
-    .bar { height: 8px; background: linear-gradient(90deg, var(--red-deep), var(--red), var(--red-bright)); }
-    .inner { padding: 36px 40px 40px; }
+    .bar {
+      height: 8px;
+      background: linear-gradient(90deg, var(--red-deep), var(--red), var(--red-bright), var(--amber));
+    }
+    .inner { padding: 32px 36px 36px; }
     .top {
       display: flex; justify-content: space-between; align-items: flex-start;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
-    .title { font-size: 28px; font-weight: 800; }
-    .sub { font-size: 18px; color: var(--muted); margin-top: 4px; }
-    .score {
-      text-align: right;
+    .title { font-size: 26px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+    .title svg { width: 24px; height: 24px; fill: var(--red-bright); }
+    .sub { font-size: 16px; color: var(--muted); margin-top: 4px; }
+
+    .score-block { display: flex; align-items: center; gap: 20px; }
+    .donut {
+      width: 100px; height: 100px; border-radius: 50%;
+      background: conic-gradient(var(--red) 0 280deg, #2A2A2A 280deg 360deg);
+      display: grid; place-items: center; position: relative;
+      box-shadow: 0 0 30px rgba(225,29,72,.25);
     }
-    .score .n {
-      font-size: 64px; font-weight: 800; color: var(--red-bright); line-height: 1;
+    .donut::after {
+      content: ''; width: 72px; height: 72px; border-radius: 50%;
+      background: var(--panel); position: absolute;
     }
-    .score .g {
-      font-size: 20px; color: var(--muted); font-weight: 700;
-    }
+    .donut span { position: relative; z-index: 1; font-size: 28px; font-weight: 800; color: var(--red-bright); }
+    .score-meta .n { font-size: 48px; font-weight: 800; color: var(--red-bright); line-height: 1; }
+    .score-meta .g { font-size: 18px; color: var(--amber); font-weight: 800; margin-top: 4px; }
+
     .stats {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
-      margin-bottom: 28px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+      margin-bottom: 20px;
     }
     .stat {
-      background: #0A0A0A; border: 1px solid var(--border);
-      border-radius: 16px; padding: 18px 16px;
+      background: var(--panel2); border: 1px solid var(--border);
+      border-radius: 14px; padding: 14px; position: relative; overflow: hidden;
     }
-    .stat .k { font-size: 14px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
-    .stat .v { font-size: 34px; font-weight: 800; margin-top: 6px; }
+    .stat::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    }
+    .stat.crit::before { background: var(--red); }
+    .stat.high::before { background: var(--amber); }
+    .stat.med::before { background: #60A5FA; }
+    .stat.ok::before { background: var(--green); }
+    .stat .k { font-size: 12px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+    .stat .v { font-size: 30px; font-weight: 800; margin-top: 4px; display: flex; align-items: center; gap: 6px; }
     .stat.crit .v { color: var(--red); }
-    .stat.high .v { color: #FBBF24; }
+    .stat.high .v { color: var(--amber); }
+    .stat.med .v { color: #60A5FA; }
     .stat.ok .v { color: #4ADE80; }
-    .rows { border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+    .stat .v svg { width: 20px; height: 20px; fill: currentColor; opacity: .8; }
+
+    .banner-alert {
+      display: flex; align-items: center; gap: 14px;
+      background: rgba(225,29,72,.12); border: 1px solid rgba(225,29,72,.35);
+      border-radius: 14px; padding: 14px 18px; margin-bottom: 18px;
+    }
+    .banner-alert svg { width: 28px; height: 28px; fill: var(--red-bright); flex-shrink: 0; }
+    .banner-alert .t { font-size: 18px; font-weight: 800; color: var(--red-bright); }
+    .banner-alert .m { font-size: 14px; color: var(--muted); margin-top: 2px; }
+
+    .rows { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
     .row {
-      display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center;
-      padding: 16px 20px; border-bottom: 1px solid var(--border); background: #0C0C0C;
+      display: grid; grid-template-columns: 36px auto 1fr auto; gap: 14px; align-items: center;
+      padding: 14px 16px; border-bottom: 1px solid var(--border); background: var(--panel2);
     }
     .row:last-child { border-bottom: 0; }
+    .row-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: grid; place-items: center;
+    }
+    .row-icon.fail { background: rgba(225,29,72,.2); color: var(--red-bright); }
+    .row-icon.warn { background: rgba(245,158,11,.15); color: var(--amber); }
+    .row-icon.pass { background: rgba(34,197,94,.12); color: #4ADE80; }
+    .row-icon svg { width: 20px; height: 20px; fill: currentColor; }
     .tag {
-      font-size: 14px; font-weight: 800; padding: 6px 12px; border-radius: 999px;
-      text-transform: uppercase;
+      font-size: 12px; font-weight: 800; padding: 5px 10px; border-radius: 999px;
+      text-transform: uppercase; white-space: nowrap;
     }
     .tag.fail { background: rgba(225,29,72,.2); color: var(--red-bright); }
     .tag.pass { background: rgba(74,222,128,.12); color: #4ADE80; }
     .tag.warn { background: rgba(251,191,36,.15); color: #FBBF24; }
-    .row-title { font-size: 20px; font-weight: 700; }
-    .row-meta { font-size: 15px; color: var(--muted); margin-top: 2px; }
-    .sev { font-size: 14px; font-weight: 700; color: var(--muted); }
+    .row-title { font-size: 18px; font-weight: 700; }
+    .row-meta { font-size: 14px; color: var(--muted); margin-top: 2px; }
+    .sev {
+      font-size: 11px; font-weight: 800; padding: 6px 10px; border-radius: 8px;
+      letter-spacing: .04em;
+    }
+    .sev.crit { background: rgba(225,29,72,.25); color: var(--red-bright); }
+    .sev.high { background: rgba(245,158,11,.2); color: var(--amber); }
+    .sev.ok { background: rgba(34,197,94,.12); color: #4ADE80; }
   </style>
 </head>
 <body>
   <div class="stage">
-    <div>
-      <div class="badge"><span class="dot"></span> Filament plugin · Security audit</div>
-      <div class="brand">
-        <div class="shield" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V5l-8-3zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v9.8z"/></svg>
+    <!-- Floating alert toasts -->
+    <div class="float-alert crit a1">
+      <div class="alert-icon crit">
+        <svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+      </div>
+      <div class="alert-text">
+        <div class="t">3 open alerts</div>
+        <div class="m">Production profile · scan 2m ago</div>
+      </div>
+    </div>
+    <div class="float-alert warn a2">
+      <div class="alert-icon warn">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+      </div>
+      <div class="alert-text">
+        <div class="t">CVE in dependency</div>
+        <div class="m">Composer audit recommended</div>
+      </div>
+    </div>
+    <div class="float-alert crit a3">
+      <div class="alert-icon crit">
+        <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+      </div>
+      <div class="alert-text">
+        <div class="t">Route exposed</div>
+        <div class="m">/horizon · no auth</div>
+      </div>
+    </div>
+
+    <div class="left">
+      <div class="badge-row">
+        <div class="badge"><span class="dot"></span> Security audit</div>
+        <div class="badge live"><span class="pulse"></span> Live scan</div>
+      </div>
+      <div class="hero-row">
+        <div class="shield-wrap">
+          <svg class="radar" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(225,29,72,.3)" stroke-width="1"/>
+            <circle cx="50" cy="50" r="30" fill="none" stroke="rgba(225,29,72,.2)" stroke-width="1"/>
+            <circle cx="50" cy="50" r="15" fill="none" stroke="rgba(225,29,72,.15)" stroke-width="1"/>
+            <line x1="50" y1="50" x2="50" y2="5" stroke="rgba(251,113,133,.5)" stroke-width="2"/>
+          </svg>
+          <div class="shield">
+            <svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V5l-8-3zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v9.8z"/></svg>
+          </div>
+          <div class="shield-badge">!</div>
         </div>
       </div>
       <h1>Cybersecurity <span>Dashboard</span></h1>
-      <p class="lead">Audit .env, routes, Redis, workers, PHP/Laravel posture and risky packages — score and fix guidance.</p>
+      <p class="lead">Score your Laravel posture: .env, routes, Redis, workers, PHP runtime and risky packages — with alerts and remediation.</p>
+
+      <div class="alert-chips">
+        <span class="chip crit"><svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg> 1 Critical</span>
+        <span class="chip high"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg> 2 High</span>
+        <span class="chip ok"><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> 9 Passed</span>
+      </div>
+
       <div class="features">
-        <div class="feat"><i></i> Environment &amp; APP_DEBUG</div>
-        <div class="feat"><i></i> Protected routes / API</div>
-        <div class="feat"><i></i> Session &amp; HTTPS hardening</div>
-        <div class="feat"><i></i> Redis · queues · workers</div>
-        <div class="feat"><i></i> Dangerous Composer packages</div>
-        <div class="feat"><i></i> CLI audit for CI</div>
-        <div class="feat"><i></i> Score A–F + remediation</div>
-        <div class="feat"><i></i> Filament v5 ready</div>
+        <div class="feat"><span class="feat-icon"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg></span> APP_DEBUG · .env</div>
+        <div class="feat"><span class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 11 5.16-1.26 9-6.45 9-11V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg></span> Routes &amp; API</div>
+        <div class="feat"><span class="feat-icon"><svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2z"/></svg></span> Session · HTTPS</div>
+        <div class="feat"><span class="feat-icon"><svg viewBox="0 0 24 24"><path d="M20 13H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1zM7 19c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM20 3H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1zM7 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg></span> Redis · workers</div>
+        <div class="feat"><span class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 2l-5.5 9h11L12 2zm0 3.84L13.93 9h-3.87L12 5.84zM17.5 13c-2.49 0-4.5 2.01-4.5 4.5s2.01 4.5 4.5 4.5 4.5-2.01 4.5-4.5-2.01-4.5-4.5-4.5zm-11 0C4.01 13 2 15.01 2 17.5S4.01 22 6.5 22 11 19.99 11 17.5 8.99 13 6.5 13z"/></svg></span> CVE · packages</div>
+        <div class="feat"><span class="feat-icon"><svg viewBox="0 0 24 24"><path d="M9.4 16.6 4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0 4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg></span> CLI · CI audit</div>
       </div>
     </div>
-    <div class="card">
-      <div class="bar"></div>
-      <div class="inner">
-        <div class="top">
-          <div>
-            <div class="title">Security posture</div>
-            <div class="sub">Profile · production · last scan now</div>
-          </div>
-          <div class="score">
-            <div class="n">78</div>
-            <div class="g">Grade C</div>
-          </div>
-        </div>
-        <div class="stats">
-          <div class="stat crit"><div class="k">Critical</div><div class="v">1</div></div>
-          <div class="stat high"><div class="k">High</div><div class="v">2</div></div>
-          <div class="stat ok"><div class="k">Passed</div><div class="v">9</div></div>
-          <div class="stat"><div class="k">Checks</div><div class="v" style="color:#FAFAFA">12</div></div>
-        </div>
-        <div class="rows">
-          <div class="row">
-            <span class="tag fail">Fail</span>
+
+    <div class="right">
+      <div class="card">
+        <div class="bar"></div>
+        <div class="inner">
+          <div class="top">
             <div>
-              <div class="row-title">APP_DEBUG enabled</div>
-              <div class="row-meta">environment · turn off in production</div>
+              <div class="title">
+                <svg viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 11 5.16-1.26 9-6.45 9-11V5l-9-4z"/></svg>
+                Security posture
+              </div>
+              <div class="sub">Profile production · 12 checks · re-scan ready</div>
             </div>
-            <span class="sev">CRITICAL</span>
+            <div class="score-block">
+              <div class="donut"><span>78</span></div>
+              <div class="score-meta">
+                <div class="n">Grade C</div>
+                <div class="g">↓ 6 pts since last scan</div>
+              </div>
+            </div>
           </div>
-          <div class="row">
-            <span class="tag warn">Warn</span>
+
+          <div class="banner-alert">
+            <svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
             <div>
-              <div class="row-title">Sensitive routes without auth</div>
-              <div class="row-meta">routes · Horizon / Telescope patterns</div>
+              <div class="t">Immediate action required</div>
+              <div class="m">1 critical and 2 high severity findings need remediation</div>
             </div>
-            <span class="sev">HIGH</span>
           </div>
-          <div class="row">
-            <span class="tag pass">Pass</span>
-            <div>
-              <div class="row-title">Redis PING OK · queue async</div>
-              <div class="row-meta">infrastructure · workers ready</div>
+
+          <div class="stats">
+            <div class="stat crit">
+              <div class="k">Critical</div>
+              <div class="v"><svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>1</div>
             </div>
-            <span class="sev">OK</span>
+            <div class="stat high">
+              <div class="k">High</div>
+              <div class="v"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>2</div>
+            </div>
+            <div class="stat med">
+              <div class="k">Medium</div>
+              <div class="v">1</div>
+            </div>
+            <div class="stat ok">
+              <div class="k">Passed</div>
+              <div class="v"><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>9</div>
+            </div>
+          </div>
+
+          <div class="rows">
+            <div class="row">
+              <div class="row-icon fail"><svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg></div>
+              <span class="tag fail">Fail</span>
+              <div>
+                <div class="row-title">APP_DEBUG enabled in production</div>
+                <div class="row-meta">environment · exposes stack traces</div>
+              </div>
+              <span class="sev crit">CRITICAL</span>
+            </div>
+            <div class="row">
+              <div class="row-icon warn"><svg viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 11 5.16-1.26 9-6.45 9-11V5l-9-4z"/></svg></div>
+              <span class="tag warn">Warn</span>
+              <div>
+                <div class="row-title">Sensitive routes without authentication</div>
+                <div class="row-meta">routes · Horizon / Telescope / log-viewer</div>
+              </div>
+              <span class="sev high">HIGH</span>
+            </div>
+            <div class="row">
+              <div class="row-icon warn"><svg viewBox="0 0 24 24"><path d="M12 2l-5.5 9h11L12 2z"/></svg></div>
+              <span class="tag warn">Warn</span>
+              <div>
+                <div class="row-title">Telescope installed in strict env</div>
+                <div class="row-meta">dependencies · dev package in prod</div>
+              </div>
+              <span class="sev high">HIGH</span>
+            </div>
+            <div class="row">
+              <div class="row-icon pass"><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+              <span class="tag pass">Pass</span>
+              <div>
+                <div class="row-title">Redis PING OK · queue async · APP_KEY set</div>
+                <div class="row-meta">infrastructure · workers healthy</div>
+              </div>
+              <span class="sev ok">OK</span>
+            </div>
           </div>
         </div>
       </div>
