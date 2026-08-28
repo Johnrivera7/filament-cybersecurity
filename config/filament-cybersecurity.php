@@ -87,6 +87,23 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | External vulnerability intelligence (no API keys required)
+    |--------------------------------------------------------------------------
+    | OSV.dev  → composer.lock dependencies (Packagist)
+    | endoflife.date → PHP, Laravel, Redis, DB lifecycle / patches
+    | NVD (NIST) → CVE for runtime stack versions (rate-limited, cached)
+    */
+    'vulnerability_intel' => [
+        'enabled' => env('CYBERSECURITY_VULN_INTEL', true),
+        'osv_dependencies' => true,
+        'stack_lifecycle' => true,
+        'stack_cve_nvd' => true,
+        'cache_ttl' => (int) env('CYBERSECURITY_INTEL_CACHE_TTL', 86400),
+        'nvd_delay_ms' => (int) env('CYBERSECURITY_NVD_DELAY_MS', 1200),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Dangerous packages when present outside local
     |--------------------------------------------------------------------------
     */

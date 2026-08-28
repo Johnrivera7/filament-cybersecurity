@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.3.0 — 2026-08-28
+
+### Added
+
+- **OSV.dev** scan of `composer.lock` (Packagist CVE, no API key)
+- **Stack vulnerability check**: PHP, Laravel, Redis and DB engine via:
+  - **endoflife.date** — EOL, security-only branch, patch lag
+  - **NVD (NIST)** — CVE filtered by version ranges (no API key, cached + rate-safe delay)
+- Runtime probes: Redis `INFO`, DB `VERSION()`, Laravel `app()->version()`
+- Config block `vulnerability_intel` (toggle OSV/NVD/EOL, cache TTL, NVD delay)
+
+### Changed
+
+- Replaced standalone `PhpVersionCheck` with `StackVulnerabilityCheck`
+- `composer audit` no longer warns when exit code 1 is only due to **abandoned** packages
+
 ## 1.2.0 — 2026-08-28
 
 ### Added

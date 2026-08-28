@@ -36,6 +36,14 @@ final class ComposerAudit
                 ];
             }
 
+            if (self::isAbandonedOnlyResponse($output)) {
+                return [
+                    'ok' => true,
+                    'error' => null,
+                    'advisories' => [],
+                ];
+            }
+
             return [
                 'ok' => false,
                 'error' => $e->getMessage(),
@@ -98,6 +106,26 @@ final class ComposerAudit
         }
 
         return $items;
+    }
+
+    private static function isAbandonedOnlyResponse(string $output): bool
+    {
+        if ($output === '') {
+            return false;
+        }
+
+        try {
+            /** @var array<string, mixed> $data */
+            $data = json_decode($output, true, 512, JSON_THROW_ON_ERROR);
+        } catch (\Throwable) {
+            return false;
+        }
+
+        $hasAdvisories = isset($data['advisories']) && is_array($data['advisories']) && $data['advisories'] !== [];
+        $hasVulnerabilities = isset($data['vulnerabilities']) && is_array($data['vulnerabilities']) && $data['vulnerabilities'] !== [];
+        $hasAbandoned = isset($data['abandoned']) && is_array($data['abandoned']) && $data['abandoned'] !== [];
+
+        return ! $hasAdvisories && ! $hasVulnerabilities && $hasAbandoned;
     }
 
     /**

@@ -15,12 +15,13 @@ use JohnRivera7\FilamentCybersecurity\Audit\Checks\EnvExampleDriftCheck;
 use JohnRivera7\FilamentCybersecurity\Audit\Checks\FilamentPluginsCheck;
 use JohnRivera7\FilamentCybersecurity\Audit\Checks\HorizonWorkersCheck;
 use JohnRivera7\FilamentCybersecurity\Audit\Checks\MailDriverCheck;
-use JohnRivera7\FilamentCybersecurity\Audit\Checks\PhpVersionCheck;
+use JohnRivera7\FilamentCybersecurity\Audit\Checks\OsvDependencyCheck;
 use JohnRivera7\FilamentCybersecurity\Audit\Checks\QueueConnectionCheck;
 use JohnRivera7\FilamentCybersecurity\Audit\Checks\RedisUsageCheck;
 use JohnRivera7\FilamentCybersecurity\Audit\Checks\RuntimeStackCheck;
 use JohnRivera7\FilamentCybersecurity\Audit\Checks\SensitiveRoutesCheck;
 use JohnRivera7\FilamentCybersecurity\Audit\Checks\SessionSecurityCheck;
+use JohnRivera7\FilamentCybersecurity\Audit\Checks\StackVulnerabilityCheck;
 use JohnRivera7\FilamentCybersecurity\Audit\Contracts\SecurityCheck;
 use JohnRivera7\FilamentCybersecurity\Audit\Enums\EnvironmentProfile;
 use JohnRivera7\FilamentCybersecurity\Audit\Enums\Severity;
@@ -47,11 +48,12 @@ final class AuditRunner
             ApiRoutesSecurityCheck::class,
             ComposerDangerousPackagesCheck::class,
             ComposerAuditCheck::class,
+            OsvDependencyCheck::class,
             FilamentPluginsCheck::class,
             RedisUsageCheck::class,
             QueueConnectionCheck::class,
             HorizonWorkersCheck::class,
-            PhpVersionCheck::class,
+            StackVulnerabilityCheck::class,
             RuntimeStackCheck::class,
         ];
     }

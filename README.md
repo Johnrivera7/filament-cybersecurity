@@ -41,6 +41,8 @@
 - Session hardening: Secure, HttpOnly, SameSite, encrypt
 - Sensitive routes without auth (Horizon, Telescope, Pulse, log-viewer, …)
 - **Composer CVE audit** via `composer audit` (Packagist advisories)
+- **OSV.dev** live CVE scan of `composer.lock` (no API key)
+- **Stack CVE / EOL**: PHP, Laravel, Redis, MySQL/MariaDB/PostgreSQL via endoflife.date + NVD
 - **API routes** without auth / throttle on POST
 - **`.env` vs `.env.example`** key drift
 - **Horizon workers** status in staging/production
