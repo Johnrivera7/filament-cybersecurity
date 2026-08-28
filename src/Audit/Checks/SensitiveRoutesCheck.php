@@ -37,6 +37,12 @@ final class SensitiveRoutesCheck implements SecurityCheck
         /** @var list<string> $patterns */
         $patterns = config('filament-cybersecurity.sensitive_route_patterns', []);
 
+        /** @var list<string> $ignoreLocal */
+        $ignoreLocal = config('filament-cybersecurity.sensitive_route_ignore_in_local', [
+            '_debugbar*',
+            'filament-impersonate/leave',
+        ]);
+
         $exposed = [];
 
         foreach (Route::getRoutes() as $route) {
@@ -55,6 +61,21 @@ final class SensitiveRoutesCheck implements SecurityCheck
 
             if (! $isSensitive) {
                 continue;
+            }
+
+            if ($profile === EnvironmentProfile::Local) {
+                $ignored = false;
+
+                foreach ($ignoreLocal as $ignore) {
+                    if ($this->matches($uri, $ignore) || ($name !== '' && $this->matches($name, $ignore))) {
+                        $ignored = true;
+                        break;
+                    }
+                }
+
+                if ($ignored) {
+                    continue;
+                }
             }
 
             if ($this->hasAuthMiddleware($middleware)) {

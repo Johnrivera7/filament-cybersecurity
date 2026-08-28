@@ -40,6 +40,12 @@
 - Environment checks: `APP_DEBUG`, `APP_KEY`, HTTPS `APP_URL`
 - Session hardening: Secure, HttpOnly, SameSite, encrypt
 - Sensitive routes without auth (Horizon, Telescope, Pulse, log-viewer, …)
+- **Composer CVE audit** via `composer audit` (Packagist advisories)
+- **API routes** without auth / throttle on POST
+- **`.env` vs `.env.example`** key drift
+- **Horizon workers** status in staging/production
+- **Mail driver** sanity in strict profiles
+- **Filament plugins** inventory
 - Dangerous / debug Composer packages outside local
 - Redis usage + PING + auth warning
 - Queue/workers: flag `sync` in staging/production

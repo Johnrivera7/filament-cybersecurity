@@ -53,6 +53,40 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Ignored sensitive routes in local profile (debug tooling)
+    |--------------------------------------------------------------------------
+    */
+    'sensitive_route_ignore_in_local' => [
+        '_debugbar*',
+        'filament-impersonate/leave',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Critical .env keys (must exist when .env.example is present)
+    |--------------------------------------------------------------------------
+    */
+    'critical_env_keys' => [
+        'APP_KEY',
+        'APP_ENV',
+        'APP_DEBUG',
+        'APP_URL',
+        'DB_CONNECTION',
+        'SESSION_DRIVER',
+        'QUEUE_CONNECTION',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Composer audit (CVE) via CLI
+    |--------------------------------------------------------------------------
+    */
+    'composer_audit' => [
+        'enabled' => env('CYBERSECURITY_COMPOSER_AUDIT', true),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Dangerous packages when present outside local
     |--------------------------------------------------------------------------
     */

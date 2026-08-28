@@ -5,10 +5,16 @@ declare(strict_types=1);
 namespace JohnRivera7\FilamentCybersecurity\Audit;
 
 use Illuminate\Support\Facades\Cache;
+use JohnRivera7\FilamentCybersecurity\Audit\Checks\ApiRoutesSecurityCheck;
 use JohnRivera7\FilamentCybersecurity\Audit\Checks\AppDebugCheck;
 use JohnRivera7\FilamentCybersecurity\Audit\Checks\AppKeyCheck;
 use JohnRivera7\FilamentCybersecurity\Audit\Checks\AppUrlHttpsCheck;
+use JohnRivera7\FilamentCybersecurity\Audit\Checks\ComposerAuditCheck;
 use JohnRivera7\FilamentCybersecurity\Audit\Checks\ComposerDangerousPackagesCheck;
+use JohnRivera7\FilamentCybersecurity\Audit\Checks\EnvExampleDriftCheck;
+use JohnRivera7\FilamentCybersecurity\Audit\Checks\FilamentPluginsCheck;
+use JohnRivera7\FilamentCybersecurity\Audit\Checks\HorizonWorkersCheck;
+use JohnRivera7\FilamentCybersecurity\Audit\Checks\MailDriverCheck;
 use JohnRivera7\FilamentCybersecurity\Audit\Checks\PhpVersionCheck;
 use JohnRivera7\FilamentCybersecurity\Audit\Checks\QueueConnectionCheck;
 use JohnRivera7\FilamentCybersecurity\Audit\Checks\RedisUsageCheck;
@@ -31,14 +37,20 @@ final class AuditRunner
     public static function defaultChecks(): array
     {
         return [
+            EnvExampleDriftCheck::class,
             AppDebugCheck::class,
             AppKeyCheck::class,
             AppUrlHttpsCheck::class,
             SessionSecurityCheck::class,
+            MailDriverCheck::class,
             SensitiveRoutesCheck::class,
+            ApiRoutesSecurityCheck::class,
             ComposerDangerousPackagesCheck::class,
+            ComposerAuditCheck::class,
+            FilamentPluginsCheck::class,
             RedisUsageCheck::class,
             QueueConnectionCheck::class,
+            HorizonWorkersCheck::class,
             PhpVersionCheck::class,
             RuntimeStackCheck::class,
         ];

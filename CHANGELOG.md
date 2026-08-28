@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.2.0 — 2026-08-28
+
+### Added
+
+- **Composer audit (CVE)**: runs `composer audit --format=json` and surfaces advisories in the dashboard
+- **API routes security**: flags unauthenticated `api/*` routes and POST endpoints without throttle
+- **`.env` drift check**: compares keys in `.env` vs `.env.example` (critical keys fail)
+- **Horizon workers probe**: `horizon:status` in strict profiles (staging/production)
+- **Mail driver check**: warns on `log`/`array`/`failover` in strict profiles
+- **Filament plugins inventory**: lists installed Filament extensions; flags dev plugins in strict mode
+- Config: `critical_env_keys`, `composer_audit.enabled`, `sensitive_route_ignore_in_local`
+- Meta UI: CVE advisories table, plugins list, env key drift details
+- Unit tests for `EnvFileReader` and `ComposerAudit` JSON parsing
+
+### Changed
+
+- Sensitive routes: debug tooling (`_debugbar*`, impersonate leave) ignored in **local** profile
+- Default check registry expanded (16 built-in checks)
+
 ## 1.1.0 — 2026-08-28
 
 ### Added

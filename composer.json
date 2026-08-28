@@ -23,7 +23,8 @@
         "filament/filament": "^5.0",
         "illuminate/contracts": "^11.28|^12.0|^13.0",
         "illuminate/support": "^11.28|^12.0|^13.0",
-        "spatie/laravel-package-tools": "^1.16"
+        "spatie/laravel-package-tools": "^1.16",
+        "symfony/process": "^6.4|^7.0|^8.0"
     },
     "require-dev": {
         "laravel/pint": "^1.18",
