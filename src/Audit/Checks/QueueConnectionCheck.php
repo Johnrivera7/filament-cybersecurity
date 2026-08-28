@@ -8,6 +8,7 @@ use JohnRivera7\FilamentCybersecurity\Audit\Contracts\SecurityCheck;
 use JohnRivera7\FilamentCybersecurity\Audit\Enums\EnvironmentProfile;
 use JohnRivera7\FilamentCybersecurity\Audit\Enums\Severity;
 use JohnRivera7\FilamentCybersecurity\Audit\Support\Finding;
+use Laravel\Horizon\Horizon;
 
 final class QueueConnectionCheck implements SecurityCheck
 {
@@ -50,7 +51,7 @@ final class QueueConnectionCheck implements SecurityCheck
             ];
         }
 
-        $horizonInstalled = class_exists(\Laravel\Horizon\Horizon::class);
+        $horizonInstalled = class_exists(Horizon::class);
 
         return [
             Finding::pass(

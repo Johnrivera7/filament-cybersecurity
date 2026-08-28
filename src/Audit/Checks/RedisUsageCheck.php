@@ -62,7 +62,15 @@ final class RedisUsageCheck implements SecurityCheck
                 title: 'Redis en uso',
                 description: 'Drivers Redis: '.implode(', ', $uses).'.',
                 category: $this->category(),
-                meta: ['uses' => $uses],
+                meta: [
+                    'uses' => $uses,
+                    'cache' => (string) config('cache.default'),
+                    'session' => (string) config('session.driver'),
+                    'queue' => (string) config('queue.default'),
+                    'host' => (string) config('database.redis.default.host'),
+                    'port' => (string) config('database.redis.default.port'),
+                    'client' => (string) config('database.redis.client', 'phpredis'),
+                ],
             ),
         ];
 

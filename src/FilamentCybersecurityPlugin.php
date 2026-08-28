@@ -7,8 +7,9 @@ namespace JohnRivera7\FilamentCybersecurity;
 use Closure;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
+use Filament\Support\Assets\Css;
+use JohnRivera7\FilamentCybersecurity\Audit\Contracts\SecurityCheck;
 use JohnRivera7\FilamentCybersecurity\Filament\Pages\CybersecurityDashboard;
-use JohnRivera7\FilamentCybersecurity\Filament\Widgets\CybersecurityScoreOverview;
 
 class FilamentCybersecurityPlugin implements Plugin
 {
@@ -24,7 +25,7 @@ class FilamentCybersecurityPlugin implements Plugin
 
     protected string|Closure|null $permission = null;
 
-    /** @var list<class-string<\JohnRivera7\FilamentCybersecurity\Audit\Contracts\SecurityCheck>> */
+    /** @var list<class-string<SecurityCheck>> */
     protected array $extraChecks = [];
 
     public static function make(): static
@@ -47,14 +48,14 @@ class FilamentCybersecurityPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
+        $panel->assets([
+            Css::make('filament-cybersecurity', __DIR__.'/../resources/dist/filament-cybersecurity.css'),
+        ]);
+
         if ($this->hasDashboard()) {
-            $panel
-                ->pages([
-                    CybersecurityDashboard::class,
-                ])
-                ->widgets([
-                    CybersecurityScoreOverview::class,
-                ]);
+            $panel->pages([
+                CybersecurityDashboard::class,
+            ]);
         }
     }
 
@@ -139,7 +140,7 @@ class FilamentCybersecurityPlugin implements Plugin
     }
 
     /**
-     * @param  class-string<\JohnRivera7\FilamentCybersecurity\Audit\Contracts\SecurityCheck>  $check
+     * @param  class-string<SecurityCheck>  $check
      */
     public function check(string $check): static
     {
@@ -149,7 +150,7 @@ class FilamentCybersecurityPlugin implements Plugin
     }
 
     /**
-     * @return list<class-string<\JohnRivera7\FilamentCybersecurity\Audit\Contracts\SecurityCheck>>
+     * @return list<class-string<SecurityCheck>>
      */
     public function getExtraChecks(): array
     {

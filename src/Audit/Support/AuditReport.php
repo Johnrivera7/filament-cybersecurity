@@ -70,7 +70,12 @@ final class AuditReport
                 'passed' => count($this->passed()),
                 'failed' => count($this->failed()),
                 'total' => count($this->findings),
+                'checks' => count(array_unique(array_map(
+                    fn (Finding $f): string => $f->checkId,
+                    $this->findings,
+                ))),
             ],
+            'summary' => ReportSummary::build($this->profile),
             'findings' => array_map(fn (Finding $f): array => $f->toArray(), $this->findings),
         ];
     }

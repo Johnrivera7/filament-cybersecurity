@@ -7,6 +7,7 @@ namespace JohnRivera7\FilamentCybersecurity\Filament\Widgets;
 use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use JohnRivera7\FilamentCybersecurity\Audit\AuditRunner;
+use JohnRivera7\FilamentCybersecurity\Audit\Enums\Severity;
 
 class CybersecurityScoreOverview extends StatsOverviewWidget
 {
@@ -16,8 +17,8 @@ class CybersecurityScoreOverview extends StatsOverviewWidget
     {
         $report = app(AuditRunner::class)->run();
         $counts = [
-            'critical' => $report->countBySeverity(\JohnRivera7\FilamentCybersecurity\Audit\Enums\Severity::Critical),
-            'high' => $report->countBySeverity(\JohnRivera7\FilamentCybersecurity\Audit\Enums\Severity::High),
+            'critical' => $report->countBySeverity(Severity::Critical),
+            'high' => $report->countBySeverity(Severity::High),
             'failed' => count($report->failed()),
             'passed' => count($report->passed()),
         ];

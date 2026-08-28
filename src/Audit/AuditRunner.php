@@ -12,10 +12,12 @@ use JohnRivera7\FilamentCybersecurity\Audit\Checks\ComposerDangerousPackagesChec
 use JohnRivera7\FilamentCybersecurity\Audit\Checks\PhpVersionCheck;
 use JohnRivera7\FilamentCybersecurity\Audit\Checks\QueueConnectionCheck;
 use JohnRivera7\FilamentCybersecurity\Audit\Checks\RedisUsageCheck;
+use JohnRivera7\FilamentCybersecurity\Audit\Checks\RuntimeStackCheck;
 use JohnRivera7\FilamentCybersecurity\Audit\Checks\SensitiveRoutesCheck;
 use JohnRivera7\FilamentCybersecurity\Audit\Checks\SessionSecurityCheck;
 use JohnRivera7\FilamentCybersecurity\Audit\Contracts\SecurityCheck;
 use JohnRivera7\FilamentCybersecurity\Audit\Enums\EnvironmentProfile;
+use JohnRivera7\FilamentCybersecurity\Audit\Enums\Severity;
 use JohnRivera7\FilamentCybersecurity\Audit\Support\AuditReport;
 use JohnRivera7\FilamentCybersecurity\Audit\Support\Finding;
 use JohnRivera7\FilamentCybersecurity\FilamentCybersecurityPlugin;
@@ -38,6 +40,7 @@ final class AuditRunner
             RedisUsageCheck::class,
             QueueConnectionCheck::class,
             PhpVersionCheck::class,
+            RuntimeStackCheck::class,
         ];
     }
 
@@ -84,7 +87,7 @@ final class AuditRunner
                     checkId: $check->id(),
                     title: $check->label().' — error',
                     description: 'El check falló al ejecutarse: '.$e->getMessage(),
-                    severity: \JohnRivera7\FilamentCybersecurity\Audit\Enums\Severity::Medium,
+                    severity: Severity::Medium,
                     remediation: 'Revisa logs y la implementación del check.',
                     category: $check->category(),
                 );
