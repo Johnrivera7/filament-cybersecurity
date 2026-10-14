@@ -125,7 +125,24 @@ final class ApiRoutesSecurityCheck implements SecurityCheck
      */
     private function hasAuthMiddleware(array $middleware): bool
     {
-        $hints = ['auth', 'sanctum', 'Authenticate', 'auth:sanctum', 'auth:api'];
+        $hints = [
+            'auth',
+            'sanctum',
+            'Authenticate',
+            'auth:sanctum',
+            'auth:api',
+            // Bearer de integración máquina a máquina (p. ej. VerifyMoodleEnrolApiToken).
+            'ApiToken',
+        ];
+
+        $extra = config('filament-cybersecurity.api_auth_middleware_hints', []);
+        if (is_array($extra)) {
+            foreach ($extra as $hint) {
+                if (is_string($hint) && $hint !== '') {
+                    $hints[] = $hint;
+                }
+            }
+        }
 
         foreach ($middleware as $item) {
             $name = is_string($item) ? $item : $item::class;

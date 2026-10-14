@@ -63,6 +63,15 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Extra substrings that count as API authentication middleware
+    |--------------------------------------------------------------------------
+    | Built-in detection already includes auth, sanctum and ApiToken
+    | (machine-to-machine Bearer, e.g. VerifyMoodleEnrolApiToken).
+    */
+    'api_auth_middleware_hints' => [],
+
+    /*
+    |--------------------------------------------------------------------------
     | Critical .env keys (must exist when .env.example is present)
     |--------------------------------------------------------------------------
     */

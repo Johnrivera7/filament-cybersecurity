@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.1 — 2026-10-14
+
+### Fixed
+
+- API route audit treats Bearer token middleware (`ApiToken`, configurable `api_auth_middleware_hints`) as authentication, so machine-to-machine feeds are not flagged as public.
+
 ## 1.3.0 — 2026-08-28
 
 ### Added
