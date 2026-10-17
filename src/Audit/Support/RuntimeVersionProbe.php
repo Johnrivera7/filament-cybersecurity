@@ -121,7 +121,9 @@ final class RuntimeVersionProbe
         try {
             $version = match ($driver) {
                 'pgsql' => (string) DB::scalar('SELECT version()'),
-                'sqlsrv' => (string) DB::scalar('SELECT @@VERSION'),
+                // ProductVersion is the engine build (e.g. 16.0.1000.6). @@VERSION leads with the
+                // marketing year (2022), which does not match endoflife.date release names (16.0).
+                'sqlsrv' => (string) DB::scalar("SELECT CAST(SERVERPROPERTY('ProductVersion') AS NVARCHAR(128))"),
                 default => (string) DB::scalar('SELECT VERSION()'),
             };
         } catch (Throwable) {
@@ -155,12 +157,33 @@ final class RuntimeVersionProbe
         }
 
         if ($driver === 'sqlsrv') {
-            if (preg_match('/Microsoft SQL Server\s+([\d.]+)/i', $raw, $matches) === 1) {
-                return $matches[1];
-            }
+            return self::parseSqlServerVersion($raw);
         }
 
         if (preg_match('/([\d]+\.[\d]+(?:\.[\d]+)?)/', $raw, $matches) === 1) {
+            return $matches[1];
+        }
+
+        return null;
+    }
+
+    /**
+     * Prefer the dotted engine build (16.0.x) over the marketing year (2022).
+     */
+    public static function parseSqlServerVersion(string $raw): ?string
+    {
+        $trimmed = trim($raw);
+
+        if (preg_match('/^\d+\.\d+(?:\.\d+){0,3}$/', $trimmed) === 1) {
+            return $trimmed;
+        }
+
+        // @@VERSION: "Microsoft SQL Server 2022 (RTM) - 16.0.1000.6 (X64) ..."
+        if (preg_match('/-\s*(\d+\.\d+(?:\.\d+){1,3})\b/', $trimmed, $matches) === 1) {
+            return $matches[1];
+        }
+
+        if (preg_match('/\b(\d+\.\d+\.\d+(?:\.\d+)?)\b/', $trimmed, $matches) === 1) {
             return $matches[1];
         }
 

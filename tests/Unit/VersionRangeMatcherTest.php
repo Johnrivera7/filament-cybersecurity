@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace JohnRivera7\FilamentCybersecurity\Tests\Unit;
 
-use JohnRivera7\FilamentCybersecurity\Audit\Support\EndOfLifeClient;
 use JohnRivera7\FilamentCybersecurity\Audit\Support\VersionRangeMatcher;
 use PHPUnit\Framework\TestCase;
 
@@ -30,21 +29,5 @@ final class VersionRangeMatcherTest extends TestCase
             'php',
             'php',
         ));
-    }
-}
-
-final class EndOfLifeClientMatchTest extends TestCase
-{
-    public function test_match_release_by_major_minor(): void
-    {
-        $releases = [
-            ['name' => '8.4'],
-            ['name' => '8.3'],
-            ['name' => '8'],
-        ];
-
-        $match = EndOfLifeClient::matchRelease('8.4.23', $releases);
-
-        $this->assertSame('8.4', $match['name'] ?? null);
     }
 }

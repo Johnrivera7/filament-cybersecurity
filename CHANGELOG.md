@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.2 — 2026-10-17
+
+### Fixed
+
+- SQL Server lifecycle probe now uses `SERVERPROPERTY('ProductVersion')` (e.g. `16.0.x`) instead of the marketing year from `@@VERSION` (e.g. `2022`), so endoflife.date can resolve the branch.
+- Patch lag comparison strips CU/GDR suffixes from endoflife.date latest names before `version_compare`.
+
 ## 1.3.1 — 2026-10-14
 
 ### Fixed

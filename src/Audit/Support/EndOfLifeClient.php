@@ -49,6 +49,8 @@ final class EndOfLifeClient
 
         $latest = is_array($release['latest'] ?? null) ? $release['latest']['name'] ?? null : null;
         $latest = is_string($latest) ? $latest : null;
+        $latestNumeric = $latest !== null ? self::numericVersionPrefix($latest) : null;
+        $installedNumeric = self::numericVersionPrefix($version);
 
         $cpe = self::extractCpe($payload);
 
@@ -60,9 +62,23 @@ final class EndOfLifeClient
             'is_eoas' => (bool) ($release['isEoas'] ?? false),
             'is_maintained' => (bool) ($release['isMaintained'] ?? true),
             'latest_patch' => $latest,
-            'behind_patch' => $latest !== null && version_compare($version, $latest, '<'),
+            'behind_patch' => $latestNumeric !== null
+                && $installedNumeric !== null
+                && version_compare($installedNumeric, $latestNumeric, '<'),
             'cpe' => $cpe,
         ];
+    }
+
+    /**
+     * Strip suffixes such as " CU27+GDR" so version_compare can run on dotted builds.
+     */
+    public static function numericVersionPrefix(string $version): ?string
+    {
+        if (preg_match('/^(\d+(?:\.\d+)*)/', trim($version), $matches) === 1) {
+            return $matches[1];
+        }
+
+        return null;
     }
 
     /**
